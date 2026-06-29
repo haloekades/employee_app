@@ -1,7 +1,9 @@
+import 'package:employee_app/data/local/local_database_service_impl.dart';
 import 'package:employee_app/features/employee/list/bloc/employee_bloc.dart';
 import 'package:employee_app/features/employee/list/screens/employee_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'core/di/injection.dart' as di;
 import 'core/storage/local_storage.dart';
 import 'features/auth/bloc/auth_bloc.dart';
@@ -12,6 +14,9 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await di.init();
+
+  await Hive.initFlutter();
+  final localDbService = HiveDatabaseService();
 
   runApp(const MyApp());
 }

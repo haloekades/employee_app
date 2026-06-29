@@ -39,6 +39,28 @@ class Employee {
     };
   }
 
+  factory Employee.fromMap(Map<String, dynamic> map) {
+    return Employee(
+      id: map["id"],
+      name: map["name"],
+      phone: map["phone"],
+      email: map["email"],
+      job: map["job"],
+      isFavorite: map["isFavorite"],
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      "id": id,
+      "name": name,
+      "phone": phone,
+      "email": email,
+      "job": job,
+      "isFavorite": isFavorite,
+    };
+  }
+
   Employee copyWith({
     String? id,
     String? name,

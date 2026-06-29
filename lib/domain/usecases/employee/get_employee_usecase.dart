@@ -5,5 +5,5 @@ class GetEmployeeUseCase {
   final EmployeeRepository repo;
   GetEmployeeUseCase(this.repo);
 
-  Future<List<Employee>> call() => repo.getEmployeeList();
+  Future<List<Employee>> call() => /*repo.getEmployeeList()*/repo.getEmployeeListFromApiAndLocal();
 }

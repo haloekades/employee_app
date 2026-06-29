@@ -1,3 +1,5 @@
+import 'package:employee_app/data/local/local_database_service.dart';
+import 'package:employee_app/data/local/local_database_service_impl.dart';
 import 'package:employee_app/data/repositories/employee_repository_impl.dart';
 import 'package:employee_app/domain/repositories/auth/auth_repository.dart';
 import 'package:employee_app/domain/repositories/employee/employee_repository.dart';
@@ -8,6 +10,7 @@ import 'package:employee_app/domain/usecases/employee/get_employee_usecase.dart'
 import 'package:employee_app/domain/usecases/employee/update_employee_usecase.dart';
 import 'package:employee_app/features/employee/form/bloc/employee_form_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:dio/dio.dart';
 import '../../data/repositories/auth_repository_impl.dart';
@@ -24,6 +27,10 @@ Future<void> init() async {
   // External
   final prefs = await SharedPreferences.getInstance();
   sl.registerLazySingleton(() => prefs);
+
+  // database
+  await Hive.initFlutter();
+  sl.registerLazySingleton<LocalDatabaseService>(() => HiveDatabaseService());
 
   final dio = Dio();
   sl.registerLazySingleton(() => dio);
@@ -42,7 +49,7 @@ Future<void> init() async {
   );
 
   sl.registerLazySingleton<EmployeeRepository>(
-    () => EmployeeRepositoryImpl(sl()),
+    () => EmployeeRepositoryImpl(sl(), sl()),
   );
 
   // use cases
